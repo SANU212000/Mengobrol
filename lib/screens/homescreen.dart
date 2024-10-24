@@ -1,22 +1,27 @@
+// ignore: unused_import
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'new_chat_option.dart';
-import 'package:flutter_design/screens/chatscreen.dart';
+import 'chatscreen.dart';
 
 class MessagingApp extends StatelessWidget {
   const MessagingApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: ChatScreen(),
+    return  MaterialApp(
+      // theme: ThemeData(fontFamily:'Sans Serif',
+      // scaffoldBackgroundColor: Colors.grey[50] ),
+      home:const Homescreen(
+        
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+class Homescreen extends StatelessWidget {
+  const Homescreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +66,15 @@ class ChatScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ChatScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const ChatScreen(),
+                        settings: RouteSettings(
+                          arguments: {
+                            'name': chat.name,
+                            'image': chat.avatarUrl,
+                          },
+                        ),
+                      ),
                     );
                   },
                   child: chatWidget(chat),
@@ -77,11 +90,11 @@ class ChatScreen extends StatelessWidget {
 
   PreferredSizeWidget buildAppBar() {
     return AppBar(
-      toolbarHeight: 70,
+      toolbarHeight: 80,
       title: const Text(
         'Mengobrol',
         style: TextStyle(
-            fontSize: 23, color: Colors.black, fontWeight: FontWeight.w500),
+            fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
       ),
       actions: [
         IconButton(
@@ -113,13 +126,13 @@ class ChatScreen extends StatelessWidget {
       child: Row(
         children: stories.map((story) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(12, 0, 0, 7),
             child: Column(
               children: [
                 if (story['icon'] != null)
                   Container(
-                    width: 65,
-                    height: 65,
+                    width: 70,
+                    height: 70,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
@@ -135,8 +148,8 @@ class ChatScreen extends StatelessWidget {
                   )
                 else if (story['imageUrl'] != null)
                   Container(
-                    width: 65,
-                    height: 65,
+                    width: 70,
+                    height: 70,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
@@ -149,13 +162,14 @@ class ChatScreen extends StatelessWidget {
                   height: 8,
                 ),
                 SizedBox(
-                    width: 60,
+                    width: 70,
                     child: Text(
                       story['name'] ?? '',
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w500,
+                        // fontFamily:   
                       ),
                       textAlign: TextAlign.center,
                     )),
@@ -220,8 +234,9 @@ class ChatScreen extends StatelessWidget {
 
   Widget storyWidget(String name, IconData? icon, {String? imageUrl}) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 7.0),
-      width: 65.0,
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      width: 70.0,
+      // height: 21,
       child: Column(
         children: [
           Container(
@@ -249,7 +264,6 @@ class ChatScreen extends StatelessWidget {
           Text(
             name,
             style: const TextStyle(
-              fontSize: 14,
               color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
@@ -262,24 +276,26 @@ class ChatScreen extends StatelessWidget {
 
   Widget chatWidget(Chat chat) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 5, 0, 2),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       child: GestureDetector(
-        onTap: () => (context, chat) {
-          log('Chat with ${chat.name} tapped!', name: 'ChatWidget');
-        },
         child: ListTile(
           leading: CircleAvatar(
             backgroundImage: AssetImage(chat.avatarUrl),
             radius: 30,
           ),
-          title: Text(
-            chat.name,
-            style: const TextStyle(
-              fontSize: 19,
-              fontWeight: FontWeight.w600,
+                title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              chat.name,
+              style: const TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-          subtitle: Row(
+            const SizedBox(height: 2), 
+        
+           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(width: 0),
@@ -297,16 +313,18 @@ class ChatScreen extends StatelessWidget {
                               ? chat.seenedMessage
                               : chat.groupMessage,
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 14,
                     fontWeight: chat.unreadMessages > 0
                         ? FontWeight.bold
-                        : FontWeight.normal,
+                        : FontWeight.w400,
                   ),
                   overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
+        ),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -341,7 +359,7 @@ class ChatScreen extends StatelessWidget {
 }
 
 Widget messageStatusIcon(IconData icon, Color color) {
-  return Icon(icon, size: 20, color: color);
+  return Icon(icon, size: 15, color: color);
 }
 
 class Chat {
@@ -463,3 +481,38 @@ List<Chat> chats = [
     avatarUrl: 'assets/images/Craig.png',
   ),
 ];
+// class ChatDetailScreen extends StatelessWidget {
+//   final String name;
+//   final String avatarUrl;
+
+//   const ChatDetailScreen({
+//     super.key,
+//     required this.name,
+//     required this.avatarUrl,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(name),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             CircleAvatar(
+//               backgroundImage: AssetImage(avatarUrl),
+//               radius: 50,
+//             ),
+//             const SizedBox(height: 20),
+//             Text(
+//               'Chat with $name',
+//               style: const TextStyle(fontSize: 24),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

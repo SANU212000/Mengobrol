@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_design/screens/homescreen.dart';
-
+// import 'package:flutter_design/screens/homescreen.dart';
 class ChatApps extends StatelessWidget {
   const ChatApps({super.key});
 
@@ -31,11 +30,14 @@ class ChatScreenState extends State<ChatScreen> {
       'isMe': false,
       'date': 'Today'
     },
-    {'text': 'Hi, Asal', 'isMe': true, 'date': 'Today',
-    'repliedTo':{
-      'sender':'Zaire Dorwart',
-      'text':'How do you buy "nice" stuff?',
-    } 
+    {
+      'text': 'Hi, Asal',
+      'isMe': true,
+      'date': 'Today',
+      'repliedTo': {
+        'sender': 'Zaire Dorwart',
+        'text': 'How do you buy "nice" stuff?',
+      }
     },
     {
       'text':
@@ -43,47 +45,59 @@ class ChatScreenState extends State<ChatScreen> {
       'isMe': true,
       'date': 'Today',
       'repliedTo': {
-        'sender':'Zaire Dorwart',
-        'text':'Please help me find a good monitor for design'
-      }, 
+        'sender': 'Zaire Dorwart',
+        'text': 'Please help me find a good monitor for design'
+      },
+    },
+    {
+      'text':
+          '  •°•°',
+      'isMe': false,
+      'date': 'Today',
     },
   ];
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, String>? args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
         backgroundColor: Colors.white,
-        elevation: 1,
+        elevation: 2,
+        leadingWidth: 30,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios_new,size: 20, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: const Row(
+        title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: AssetImage('assets/images/ZaireDorwart.png'),
+              radius: 25,
+              backgroundImage:
+                  AssetImage(args?['image'] ?? 'assets/images/default.png'),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Zaire Dorwart',
-                  style: TextStyle(
+                  args?['name'] ?? 'Unknown User',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
-                    fontSize: 20,
+                    fontSize: 18,
                   ),
                 ),
-                Text(
+                const Text(
                   'Online',
                   style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
                   ),
                 ),
               ],
@@ -92,11 +106,11 @@ class ChatScreenState extends State<ChatScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.videocam_outlined, color: Colors.black),
+            icon: const Icon(Icons.videocam_outlined, color: Colors.black87,size: 30,),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.call_outlined, color: Colors.black),
+            icon: const Icon(Icons.call_outlined, color: Colors.black87,size: 25,),
             onPressed: () {},
           ),
         ],
@@ -130,10 +144,10 @@ class ChatScreenState extends State<ChatScreen> {
                       ),
                     GestureDetector(
                       onHorizontalDragEnd: (details) {
-                        if (details.primaryVelocity! > 0) {
+                        if (details.primaryVelocity != null &&
+                            details.primaryVelocity! > 0) {
                           setState(() {
-                            replyText =
-                                currentMessage['text']; 
+                            replyText = currentMessage['text'];
                           });
                         }
                       },
@@ -241,7 +255,7 @@ class MessageBubble extends StatelessWidget {
   final String text;
   final bool isMe;
   final String? repliedText;
-  final String ? repliedTo;
+  final String? repliedTo;
 
   const MessageBubble({
     super.key,
@@ -270,35 +284,35 @@ class MessageBubble extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (repliedText != null && repliedTo !=  null)
+                  if (repliedText != null && repliedTo != null)
                     Container(
-                      margin:  const EdgeInsets.only(bottom: 10),
+                      margin: const EdgeInsets.only(bottom: 10),
                       padding: const EdgeInsets.only(left: 10),
                       decoration: const BoxDecoration(
                           border: Border(
                               left: BorderSide(
-                              color: Colors.black,
-                              width: 2,
+                        color: Colors.black,
+                        width: 2,
                       ))),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('$repliedTo',
-                          style: const TextStyle(
+                          Text(
+                            '$repliedTo',
+                            style: const TextStyle(
                               fontSize: 13,
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                        repliedText!,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300
-                            ),
+                            repliedText!,
+                            style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w300),
                             overflow: TextOverflow.ellipsis,
-                       ),
+                          ),
                         ],
                       ),
                     ),

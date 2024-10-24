@@ -22,3 +22,7 @@ flutter:
   assets:
     - assets/images/Terry.png
     - assets/images/
+  fonts:
+    - family: Sans Serif
+      fonts:
+        - asset: assets/fonts/Roboto-Medium.ttf

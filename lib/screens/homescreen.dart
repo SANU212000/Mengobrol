@@ -1,6 +1,7 @@
 // ignore: unused_import
 import 'dart:developer';
 import 'package:flutter/material.dart';
+
 import 'new_chat_option.dart';
 import 'chatscreen.dart';
 
@@ -9,12 +10,10 @@ class MessagingApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return const MaterialApp(
       // theme: ThemeData(fontFamily:'Sans Serif',
       // scaffoldBackgroundColor: Colors.grey[50] ),
-      home:const Homescreen(
-        
-      ),
+      home: Homescreen(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -40,10 +39,7 @@ class Homescreen extends StatelessWidget {
                 children: [
                   Text(
                     'Chats',
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                   ),
                   IconButton(
                     icon: Icon(
@@ -94,7 +90,10 @@ class Homescreen extends StatelessWidget {
       title: const Text(
         'Mengobrol',
         style: TextStyle(
-            fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
+          fontSize: 25,
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+        ),
       ),
       actions: [
         IconButton(
@@ -107,10 +106,7 @@ class Homescreen extends StatelessWidget {
 
   Widget buildStorySection() {
     final List<Map<String, String?>> stories = [
-      {
-        'name': 'Add Story',
-        'icon': Icons.add_outlined.codePoint.toString(),
-      },
+      {'name': 'Add Story', 'icon': Icons.add_outlined.codePoint.toString()},
       {'name': 'Terry', 'imageUrl': 'assets/images/Terry.png'},
       {'name': 'Craig', 'imageUrl': 'assets/images/Craig.png'},
       {'name': 'Roger', 'imageUrl': 'assets/images/Roger.png'},
@@ -124,59 +120,59 @@ class Homescreen extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: stories.map((story) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(12, 0, 0, 7),
-            child: Column(
-              children: [
-                if (story['icon'] != null)
-                  Container(
-                    width: 70,
-                    height: 70,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Icon(
-                      IconData(
-                        int.parse(story['icon']!),
-                        fontFamily: 'MaterialIcons',
+        children:
+            stories.map((story) {
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(12, 0, 0, 7),
+                child: Column(
+                  children: [
+                    if (story['icon'] != null)
+                      Container(
+                        width: 70,
+                        height: 70,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: Icon(
+                          IconData(
+                            int.parse(story['icon']!),
+                            fontFamily: 'MaterialIcons',
+                          ),
+                          size: 30,
+                          color: Colors.black,
+                        ),
+                      )
+                    else if (story['imageUrl'] != null)
+                      Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage(story['imageUrl']!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                  )
-                else if (story['imageUrl'] != null)
-                  Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(story['imageUrl']!),
-                        fit: BoxFit.cover,
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: 70,
+                      child: Text(
+                        story['name'] ?? '',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          // fontFamily:
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                  ),
-                const SizedBox(
-                  height: 8,
+                  ],
                 ),
-                SizedBox(
-                    width: 70,
-                    child: Text(
-                      story['name'] ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        // fontFamily:   
-                      ),
-                      textAlign: TextAlign.center,
-                    )),
-              ],
-            ),
-          );
-        }).toList(),
+              );
+            }).toList(),
       ),
     );
   }
@@ -185,15 +181,16 @@ class Homescreen extends StatelessWidget {
     return Container(
       height: 80,
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 1),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            icon:
-                const Icon(Icons.home_outlined, size: 30, color: Colors.black),
+            icon: const Icon(
+              Icons.home_outlined,
+              size: 30,
+              color: Colors.black,
+            ),
             onPressed: () {},
           ),
           GestureDetector(
@@ -244,21 +241,19 @@ class Homescreen extends StatelessWidget {
             height: 80.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              image: imageUrl != null
-                  ? DecorationImage(
-                      image: AssetImage(imageUrl),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
+              image:
+                  imageUrl != null
+                      ? DecorationImage(
+                        image: AssetImage(imageUrl),
+                        fit: BoxFit.cover,
+                      )
+                      : null,
               color: Colors.white,
             ),
-            child: icon != null
-                ? Icon(
-                    icon,
-                    size: 30.0,
-                    color: Colors.black,
-                  )
-                : null,
+            child:
+                icon != null
+                    ? Icon(icon, size: 30.0, color: Colors.black)
+                    : null,
           ),
           const SizedBox(height: 0.0, width: 1),
           Text(
@@ -283,48 +278,48 @@ class Homescreen extends StatelessWidget {
             backgroundImage: AssetImage(chat.avatarUrl),
             radius: 30,
           ),
-                title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              chat.name,
-              style: const TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 2), 
-        
-           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(width: 0),
-              if (chat.seenedMessage.isNotEmpty)
-                messageStatusIcon(Icons.done_all, Colors.amber),
-              if (chat.sentMessage.isNotEmpty && chat.seenedMessage.isEmpty)
-                messageStatusIcon(Icons.done_all, Colors.black),
-              Expanded(
-                child: Text(
-                  chat.lastMessage.isNotEmpty
-                      ? chat.lastMessage
-                      : chat.sentMessage.isNotEmpty
+              Text(
+                chat.name,
+                style: const TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 0),
+                  if (chat.seenedMessage.isNotEmpty)
+                    messageStatusIcon(Icons.done_all, Colors.amber),
+                  if (chat.sentMessage.isNotEmpty && chat.seenedMessage.isEmpty)
+                    messageStatusIcon(Icons.done_all, Colors.black),
+                  Expanded(
+                    child: Text(
+                      chat.lastMessage.isNotEmpty
+                          ? chat.lastMessage
+                          : chat.sentMessage.isNotEmpty
                           ? chat.sentMessage
                           : chat.seenedMessage.isNotEmpty
-                              ? chat.seenedMessage
-                              : chat.groupMessage,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: chat.unreadMessages > 0
-                        ? FontWeight.bold
-                        : FontWeight.w400,
+                          ? chat.seenedMessage
+                          : chat.groupMessage,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight:
+                            chat.unreadMessages > 0
+                                ? FontWeight.bold
+                                : FontWeight.w400,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+                ],
+              ),
+            ],
+          ),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,

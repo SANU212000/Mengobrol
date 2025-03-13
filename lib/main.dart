@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_design/screens/homescreen.dart';
+
+import 'screens/homescreen.dart';
 
 
 
 void main() {
-  runApp(const MessagingApp());
+  runApp( const MessagingApp());
 }

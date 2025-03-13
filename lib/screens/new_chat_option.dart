@@ -9,13 +9,11 @@ void openFloatingPopup(BuildContext context) {
     builder: (context) {
       return Stack(
         children: [
-       
           Positioned.fill(
             child: BackdropFilter(
-              filter: ImageFilter.blur(
-                  sigmaX: 1.5, sigmaY: 1.5), 
+              filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
               child: Container(
-                color: Colors.white.withOpacity(0.3), 
+                color: Colors.white.withOpacity(0.3),
               ),
             ),
           ),
@@ -42,29 +40,31 @@ void openFloatingPopup(BuildContext context) {
                           ),
                         ],
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          buildBottomSheetItem(
-                            icon: Icons.chat_outlined,
-                            title: 'New Chat',
-                            subtitle: 'Sent a message to your contacts',
-                            onTap: () => Navigator.pop(context),
-                          ),
-                          buildBottomSheetItem(
-                            icon: Icons.contact_page_outlined,
-                            title: 'New Contact',
-                            subtitle:
-                                'Add a contact to be able to send messages',
-                            onTap: () => Navigator.pop(context),
-                          ),
-                          buildBottomSheetItem(
-                            icon: Icons.group_outlined,
-                            title: 'New Community',
-                            subtitle: 'Join the community around you',
-                            onTap: () => Navigator.pop(context),
-                          ),
-                        ],
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            buildBottomSheetItem(
+                              icon: Icons.chat_outlined,
+                              title: 'New Chat',
+                              subtitle: 'Sent a message to your contacts',
+                              onTap: () => Navigator.pop(context),
+                            ),
+                            buildBottomSheetItem(
+                              icon: Icons.contact_page_outlined,
+                              title: 'New Contact',
+                              subtitle:
+                                  'Add a contact to be able to send messages',
+                              onTap: () => Navigator.pop(context),
+                            ),
+                            buildBottomSheetItem(
+                              icon: Icons.group_outlined,
+                              title: 'New Community',
+                              subtitle: 'Join the community around you',
+                              onTap: () => Navigator.pop(context),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -104,7 +104,7 @@ Widget buildBottomSheetItem({
   required VoidCallback onTap,
 }) {
   return Padding(
-    padding: const EdgeInsets.fromLTRB(12, 5, 12, 0),
+    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
     child: Container(
       decoration: BoxDecoration(
         border: Border(
